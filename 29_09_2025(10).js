@@ -18,22 +18,25 @@ function main() {
 
   const result = [];
   students.forEach((data) => {
-    let avg = averagefunc(data.marks);
-    let {maxsub,grade} = topSubjectfunc(data.marks);
+    let{ sum , grade }= averagefunc(data.marks);
+    let maxsub = topSubjectfunc(data.marks);
     
 
-    result.push({ name: data.name, avg: avg, topSubject: maxsub, grade: grade });
+    result.push({ name: data.name, avg: sum, topSubject: maxsub, grade: grade });
   });
   console.log(result);
 }
 
 function averagefunc(marks) {
     let sum=0;
+    len=Object.keys(marks).length
     for(let key in marks){
         sum+=marks[key];
     }
-    sum=sum/3
-    return sum.toFixed(2);
+    sum = parseFloat((sum / len).toFixed(2))
+    
+    let grade = gradeCalfunc(sum);
+    return {sum,grade};
 }
 function topSubjectfunc(marks) {
     let maxsub="";
@@ -44,9 +47,7 @@ function topSubjectfunc(marks) {
             maxsub=key;
         }
     }
-    let grade = gradeCalfunc(maxnum);
-
-    return {maxsub,grade};
+    return maxsub;
 }
 function gradeCalfunc(max_num) {
     // (A = 85+, B = 70–84, C = below 70)
